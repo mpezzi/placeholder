@@ -1,0 +1,8 @@
+name              = Placeholder
+description       = Provides HTML5 placeholder attributes for textfields with jQuery Placeholder plugin as a fallback.
+core              = 6.x
+package           = User Interface
+
+version           = 6.x-1.x
+
+dependencies[]    = libraries

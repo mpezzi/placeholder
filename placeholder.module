@@ -1,0 +1,50 @@
+<?php
+
+/**
+ * @file
+ * Provides HTML5 placeholder attributes for textfields with jQuery Placeholder plugin as a fallback.
+ */
+
+/**
+ * Implements of hook_form_alter().
+ */
+function placeholder_form_alter(&$form, $form_state, $form_id) {
+  placeholder_process($form);
+}
+
+
+/**
+ * Process form elements that have placeholder properties.
+ *
+ * @param $form
+ *   A form array.
+ */
+function placeholder_process(&$form) {
+  static $added;
+
+  if ( !isset($added) ) {
+    drupal_add_js(libraries_get_path('placeholder') . '/jquery.placeholder.min.js');
+    drupal_add_js(drupal_get_path('module', 'placeholder') . '/placeholder.js');
+    $added = TRUE;
+  }
+
+  foreach ( element_children($form) as $key ) {
+    if ( placeholder_type($form[$key]) ) {
+      $form[$key]['#attributes']['placeholder'] = $form[$key]['#placeholder'];
+      $form[$key]['#attributes']['class'] = isset($form[$key]['#attributes']['class']) ? $form[$key]['#attributes']['class'] . ' placeholder' : 'placeholder';
+    }
+    placeholder_process($form[$key]);
+  }
+}
+
+/**
+ * Determine whether field can have placeholder attributes.
+ *
+ * @param $element
+ *   A single form element.
+ * @return
+ *   TRUE or FALSE
+ */
+function placeholder_type($element) {
+  return ( isset($element['#placeholder']) && isset($element['#type']) && in_array($element['#type'], array('textfield', 'password')) );
+}
