@@ -13,4 +13,4 @@ Provides HTML5 placeholder attributes for textfields with jQuery Placeholder plu
 * Enable placeholder module.
 
 ### Usage:
-* Add #placeholder properties to your form api elements.
+* Add "#placeholder" properties to your form api elements.
